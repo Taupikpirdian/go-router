@@ -32,6 +32,7 @@ func (repo *ArticleRepositoryMysqlInteractor) GetAllData(ctx context.Context, la
 	)
 	ctx, cancel := context.WithTimeout(ctx, 60*time.Second)
 	defer cancel()
+	fmt.Println(lang)
 
 	sqlQuery := "SELECT article.id, article_lang.slug, article_lang.lang, categories_lang.name as category, title, text, date, banner, author, thumbs, is_highlight FROM article JOIN article_lang ON article_lang.base_id = article.id JOIN categories_lang ON categories_lang.base_id = article.category_id WHERE article_lang.lang = ? AND categories_lang.lang = ? AND categories_lang.slug = ?"
 	rows, errMysql := repo.dbConn.QueryContext(ctx, sqlQuery, lang, lang, slug_category)
@@ -90,10 +91,11 @@ func (repo *ArticleRepositoryMysqlInteractor) GetDataBySlug(ctx context.Context,
 	ctx, cancel := context.WithTimeout(ctx, 60*time.Second)
 	defer cancel()
 
-	sqlQuery := "SELECT id, slug, article_lang.lang, categories_lang.name as category, title, text, date, banner, author, thumbs, is_highlight FROM article JOIN article_lang ON article_lang.base_id = article.id JOIN categories_lang ON categories_lang.base_id = article.category_id WHERE article_lang.slug = ?"
+	sqlQuery := "SELECT article.id, article_lang.slug, article_lang.lang, categories_lang.name as category, title, text, date, banner, author, thumbs, is_highlight FROM article JOIN article_lang ON article_lang.base_id = article.id JOIN categories_lang ON categories_lang.base_id = article.category_id WHERE article_lang.slug = ?"
 
 	rows, errMysql := repo.dbConn.QueryContext(ctx, sqlQuery, slug)
 	if errMysql != nil {
+		fmt.Println(errMysql)
 		return nil, errMysql
 	}
 

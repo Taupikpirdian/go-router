@@ -12,7 +12,7 @@ type ArticleRepository interface {
 }
 
 type ArticleRedisRepository interface {
-	GetAttributeArticleByKode(ctx context.Context, codeArticle string) (*entity.Article, error)
+	GetAttributeArticleBySlug(ctx context.Context, codeArticle string) (*entity.Article, error)
 	StoreOrUpdateData(ctx context.Context, dataArticle *entity.Article) error
 	GetAllData(ctx context.Context) (*entity.Article, error)
 }

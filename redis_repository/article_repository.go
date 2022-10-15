@@ -17,7 +17,7 @@ func NewRepoArticleRedisInteractor(Conn *redis.Client) *RepoArticleRedis {
 	return &RepoArticleRedis{Conn: Conn}
 }
 
-func (repo *RepoArticleRedis) GetAttributeArticleByKode(ctx context.Context, kodeArticle string) (*entity.Article, error) {
+func (repo *RepoArticleRedis) GetAttributeArticleBySlug(ctx context.Context, kodeArticle string) (*entity.Article, error) {
 	var (
 		checkErr error
 	)
